@@ -1,0 +1,6 @@
+func main() {
+    var x int32 = 10
+    var y, z int32 = 5, 15
+    fmt.Println("Hola Golampi!")
+    fmt.Println(x + y)
+}

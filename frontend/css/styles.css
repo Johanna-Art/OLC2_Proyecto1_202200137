@@ -1,0 +1,222 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a0033 0%, #2d004d 50%, #1a0033 100%);
+    color: #e0d0ff;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+
+h1 {
+    color: #d4a5ff;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(212, 165, 255, 0.5);
+    letter-spacing: 2px;
+}
+
+.toolbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(102, 0, 153, 0.3), rgba(153, 0, 153, 0.3));
+    border-radius: 12px;
+    border: 1px solid rgba(212, 165, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.toolbar button {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #6a0dad, #9b30ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.toolbar button:hover {
+    background: linear-gradient(135deg, #7b1fa2, #aa00ff);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(170, 0, 255, 0.6);
+}
+
+.toolbar button:active {
+    transform: translateY(0);
+}
+
+.editor-container {
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, rgba(45, 0, 77, 0.5), rgba(75, 0, 130, 0.5));
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid rgba(212, 165, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(106, 13, 173, 0.3);
+}
+
+#editor {
+    width: 100%;
+    height: 350px;
+    background: linear-gradient(180deg, #1a0033, #2d004d);
+    color: #e0d0ff;
+    border: 2px solid #6a0dad;
+    border-radius: 8px;
+    padding: 15px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    resize: vertical;
+    line-height: 1.6;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+#editor:focus {
+    outline: none;
+    border-color: #9b30ff;
+    box-shadow: 0 0 20px rgba(155, 48, 255, 0.4), inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+#editor::placeholder {
+    color: #8a6fb3;
+    font-style: italic;
+}
+
+
+.console {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #0d001a, #1a0033);
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #6a0dad;
+    box-shadow: 0 8px 32px rgba(106, 13, 173, 0.3);
+}
+
+.console h3 {
+    color: #d4a5ff;
+    margin-bottom: 12px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid rgba(212, 165, 255, 0.3);
+    padding-bottom: 8px;
+}
+
+#output {
+    white-space: pre-wrap;
+    color: #00ff88;
+    font-family: 'Consolas', 'Monaco', monospace;
+    min-height: 120px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #00ff88;
+    line-height: 1.6;
+}
+
+
+.reports {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(102, 0, 153, 0.2), rgba(153, 0, 153, 0.2));
+    border-radius: 12px;
+    border: 1px solid rgba(212, 165, 255, 0.2);
+}
+
+.reports h3 {
+    width: 100%;
+    text-align: center;
+    color: #d4a5ff;
+    margin-bottom: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.reports button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #4b0082, #6a0dad);
+    color: #e0d0ff;
+    border: 2px solid #9b30ff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.reports button:hover {
+    background: linear-gradient(135deg, #6a0dad, #9b30ff);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(155, 48, 255, 0.5);
+}
+
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.console.processing #output {
+    animation: pulse 1.5s ease-in-out infinite;
+    color: #ffcc00;
+}
+
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a0033;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6a0dad, #9b30ff);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #7b1fa2, #aa00ff);
+}
+
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    .toolbar button {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+    
+    #editor {
+        height: 250px;
+        font-size: 12px;
+    }
+}

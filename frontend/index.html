@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golampi Interpreter</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>🔷 Golampi IDE</h1>
+    
+    <div class="toolbar">
+        <button onclick="nuevo()">Nuevo</button>
+        <button onclick="cargar()">Cargar</button>
+        <button onclick="guardar()">Guardar</button>
+        <button onclick="ejecutar()">Ejecutar</button>
+        <button onclick="limpiarConsola()">Limpiar</button>
+    </div>
+    
+    <div class="editor-container">
+        <textarea id="editor" placeholder="Escribe código Golampi aquí..."></textarea>
+    </div>
+    
+    <div class="console">
+        <h3>Consola:</h3>
+        <pre id="output"></pre>
+    </div>
+    
+    <div class="reports">
+        <h3>Reportes:</h3>
+        <button onclick="descargarErrores()">Errores</button>
+        <button onclick="descargarSimbolos()"> Tabla de Símbolos</button>
+    </div>
+    
+    <script src="js/editor.js"></script>
+</body>
+</html>
