@@ -73,58 +73,6 @@ class GolampiBaseListener implements GolampiListener
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function enterStmtDeclVar(Context\StmtDeclVarContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitStmtDeclVar(Context\StmtDeclVarContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterStmtDeclVarCorta(Context\StmtDeclVarCortaContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitStmtDeclVarCorta(Context\StmtDeclVarCortaContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterStmtDeclConst(Context\StmtDeclConstContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitStmtDeclConst(Context\StmtDeclConstContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterStmtDeclFunc(Context\StmtDeclFuncContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitStmtDeclFunc(Context\StmtDeclFuncContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
 	public function enterReglaListaParam(Context\ReglaListaParamContext $context): void {}
 
 	/**
@@ -146,6 +94,19 @@ class GolampiBaseListener implements GolampiListener
 	 * The default implementation does nothing.
 	 */
 	public function exitReglaParam(Context\ReglaParamContext $context): void {}
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function enterReglaParamPuntero(Context\ReglaParamPunteroContext $context): void {}
+
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function exitReglaParamPuntero(Context\ReglaParamPunteroContext $context): void {}
 	/**
 	 * {@inheritdoc}
 	 *
@@ -359,14 +320,40 @@ class GolampiBaseListener implements GolampiListener
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function enterReglaSentIncDec(Context\ReglaSentIncDecContext $context): void {}
+	public function enterReglaSentAsignIndice(Context\ReglaSentAsignIndiceContext $context): void {}
 
 	/**
 	 * {@inheritdoc}
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function exitReglaSentIncDec(Context\ReglaSentIncDecContext $context): void {}
+	public function exitReglaSentAsignIndice(Context\ReglaSentAsignIndiceContext $context): void {}
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function enterReglaSentInc(Context\ReglaSentIncContext $context): void {}
+
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function exitReglaSentInc(Context\ReglaSentIncContext $context): void {}
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function enterReglaSentDec(Context\ReglaSentDecContext $context): void {}
+
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function exitReglaSentDec(Context\ReglaSentDecContext $context): void {}
 	/**
 	 * {@inheritdoc}
 	 *
@@ -476,14 +463,40 @@ class GolampiBaseListener implements GolampiListener
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function enterStmtSentAsign(Context\StmtSentAsignContext $context): void {}
+	public function enterReglaSentSimpleVarCorta(Context\ReglaSentSimpleVarCortaContext $context): void {}
 
 	/**
 	 * {@inheritdoc}
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function exitStmtSentAsign(Context\StmtSentAsignContext $context): void {}
+	public function exitReglaSentSimpleVarCorta(Context\ReglaSentSimpleVarCortaContext $context): void {}
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function enterReglaSentSimpleAsign(Context\ReglaSentSimpleAsignContext $context): void {}
+
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function exitReglaSentSimpleAsign(Context\ReglaSentSimpleAsignContext $context): void {}
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function enterReglaSentSimpleExpr(Context\ReglaSentSimpleExprContext $context): void {}
+
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function exitReglaSentSimpleExpr(Context\ReglaSentSimpleExprContext $context): void {}
 	/**
 	 * {@inheritdoc}
 	 *
@@ -554,92 +567,14 @@ class GolampiBaseListener implements GolampiListener
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function enterStmtSentInc(Context\StmtSentIncContext $context): void {}
+	public function enterReglaClausulaFor(Context\ReglaClausulaForContext $context): void {}
 
 	/**
 	 * {@inheritdoc}
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function exitStmtSentInc(Context\StmtSentIncContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterStmtSentDec(Context\StmtSentDecContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitStmtSentDec(Context\StmtSentDecContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterStmtSentIfElse(Context\StmtSentIfElseContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitStmtSentIfElse(Context\StmtSentIfElseContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaSentSimpleVarCorta(Context\ReglaSentSimpleVarCortaContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaSentSimpleVarCorta(Context\ReglaSentSimpleVarCortaContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaSentSimpleAsign(Context\ReglaSentSimpleAsignContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaSentSimpleAsign(Context\ReglaSentSimpleAsignContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaSentSimpleExpr(Context\ReglaSentSimpleExprContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaSentSimpleExpr(Context\ReglaSentSimpleExprContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaSentSwitchCtx(Context\ReglaSentSwitchCtxContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaSentSwitchCtx(Context\ReglaSentSwitchCtxContext $context): void {}
+	public function exitReglaClausulaFor(Context\ReglaClausulaForContext $context): void {}
 	/**
 	 * {@inheritdoc}
 	 *
@@ -666,84 +601,6 @@ class GolampiBaseListener implements GolampiListener
 	 * The default implementation does nothing.
 	 */
 	public function exitReglaClausulaDefault(Context\ReglaClausulaDefaultContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaSentForCtx(Context\ReglaSentForCtxContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaSentForCtx(Context\ReglaSentForCtxContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaClausulaFor(Context\ReglaClausulaForContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaClausulaFor(Context\ReglaClausulaForContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaSentBreakCtx(Context\ReglaSentBreakCtxContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaSentBreakCtx(Context\ReglaSentBreakCtxContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaSentContinueCtx(Context\ReglaSentContinueCtxContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaSentContinueCtx(Context\ReglaSentContinueCtxContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaSentReturnCtx(Context\ReglaSentReturnCtxContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaSentReturnCtx(Context\ReglaSentReturnCtxContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaSentExprCtx(Context\ReglaSentExprCtxContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaSentExprCtx(Context\ReglaSentExprCtxContext $context): void {}
 	/**
 	 * {@inheritdoc}
 	 *
@@ -1048,6 +905,32 @@ class GolampiBaseListener implements GolampiListener
 	 *
 	 * The default implementation does nothing.
 	 */
+	public function enterReglaPrimarioPrintln(Context\ReglaPrimarioPrintlnContext $context): void {}
+
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function exitReglaPrimarioPrintln(Context\ReglaPrimarioPrintlnContext $context): void {}
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function enterReglaPrimarioLen(Context\ReglaPrimarioLenContext $context): void {}
+
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
+	public function exitReglaPrimarioLen(Context\ReglaPrimarioLenContext $context): void {}
+	/**
+	 * {@inheritdoc}
+	 *
+	 * The default implementation does nothing.
+	 */
 	public function enterReglaPrimarioId(Context\ReglaPrimarioIdContext $context): void {}
 
 	/**
@@ -1100,79 +983,40 @@ class GolampiBaseListener implements GolampiListener
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function enterReglaPrimarioLlamadaBuiltIn(Context\ReglaPrimarioLlamadaBuiltInContext $context): void {}
+	public function enterReglaPrimarioNow(Context\ReglaPrimarioNowContext $context): void {}
 
 	/**
 	 * {@inheritdoc}
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function exitReglaPrimarioLlamadaBuiltIn(Context\ReglaPrimarioLlamadaBuiltInContext $context): void {}
+	public function exitReglaPrimarioNow(Context\ReglaPrimarioNowContext $context): void {}
 	/**
 	 * {@inheritdoc}
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function enterReglaLlamadaPrintln(Context\ReglaLlamadaPrintlnContext $context): void {}
+	public function enterReglaPrimarioTypeOf(Context\ReglaPrimarioTypeOfContext $context): void {}
 
 	/**
 	 * {@inheritdoc}
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function exitReglaLlamadaPrintln(Context\ReglaLlamadaPrintlnContext $context): void {}
+	public function exitReglaPrimarioTypeOf(Context\ReglaPrimarioTypeOfContext $context): void {}
 	/**
 	 * {@inheritdoc}
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function enterReglaLlamadaLen(Context\ReglaLlamadaLenContext $context): void {}
+	public function enterReglaPrimarioSubstr(Context\ReglaPrimarioSubstrContext $context): void {}
 
 	/**
 	 * {@inheritdoc}
 	 *
 	 * The default implementation does nothing.
 	 */
-	public function exitReglaLlamadaLen(Context\ReglaLlamadaLenContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaLlamadaNow(Context\ReglaLlamadaNowContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaLlamadaNow(Context\ReglaLlamadaNowContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaLlamadaSubstr(Context\ReglaLlamadaSubstrContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaLlamadaSubstr(Context\ReglaLlamadaSubstrContext $context): void {}
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function enterReglaLlamadaTypeOf(Context\ReglaLlamadaTypeOfContext $context): void {}
-
-	/**
-	 * {@inheritdoc}
-	 *
-	 * The default implementation does nothing.
-	 */
-	public function exitReglaLlamadaTypeOf(Context\ReglaLlamadaTypeOfContext $context): void {}
+	public function exitReglaPrimarioSubstr(Context\ReglaPrimarioSubstrContext $context): void {}
 	/**
 	 * {@inheritdoc}
 	 *

@@ -1,66 +1,98 @@
-cat > backend/index.php << 'EOF'
 <?php
-header("Access-Control-Allow-Origin: *");
+// Configuración crítica
+while (@ob_get_level()) { @ob_end_clean(); }
+error_reporting(0);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+
 header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 
-// Cargar autoloader de Composer
-require_once __DIR__ . '/../vendor/autoload.php';
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
-// Cargar clases propias
-require_once __DIR__ . '/src/SymbolTable.php';
-require_once __DIR__ . '/src/ErrorHandler.php';
-require_once __DIR__ . '/src/SemanticAnalyzer.php';
-
-// Cargar parser generado por ANTLR
-require_once __DIR__ . '/antlr/GolampiLexer.php';
-require_once __DIR__ . '/antlr/GolampiParser.php';
-
-use Antlr\Antlr4PhpRuntime\CharStreams;
-use Antlr\Antlr4PhpRuntime\CommonTokenStream;
-
-$input = json_decode(file_get_contents('php://input'), true);
-$code = $input['code'] ?? '';
-$action = $input['action'] ?? 'execute';
-
-$symbolTable = new SymbolTable();
-$errorHandler = new ErrorHandler();
+$respuesta = [
+    'exito' => false,
+    'error' => 'Error interno',
+    'salida' => '',
+    'errores' => [],
+    'tablaSimbolos' => [],
+    'reportes' => []
+];
 
 try {
-    // 1. Análisis léxico y sintáctico con ANTLR
-    $inputStream = CharStreams::fromString($code);
+    // Verificar autoload de Composer
+    if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
+        throw new Exception('vendor/autoload.php no encontrado. Ejecuta: composer install');
+    }
+    require_once __DIR__ . '/../vendor/autoload.php';
+    
+    // Clases propias - RUTA: backend/src/
+    require_once __DIR__ . '/src/TablaSimbolos.php';
+    require_once __DIR__ . '/src/ManejadorErrores.php';
+    require_once __DIR__ . '/src/GeneradorReportes.php';
+    
+    require_once __DIR__ . '/visitor/GolampiVisitorImpl.php';
+    
+  
+    require_once __DIR__ . '/antlr/GolampiLexer.php';
+    require_once __DIR__ . '/antlr/GolampiParser.php';
+    
+
+    $input = json_decode(file_get_contents('php://input'), true);
+    $codigo = $input['codigo'] ?? '';
+
+    
+    // inicializa los componentes
+    $tablaSimbolos = new TablaSimbolos();
+    $manejadorErrores = new ManejadorErrores();
+    $generadorReportes = new GeneradorReportes();
+    
+
+    // analisis con antlr
+    $inputStream = \Antlr\Antlr4\Runtime\InputStream::fromString($codigo);
     $lexer = new GolampiLexer($inputStream);
-    $tokens = new CommonTokenStream($lexer);
+    $tokens = new \Antlr\Antlr4\Runtime\CommonTokenStream($lexer);
     $parser = new GolampiParser($tokens);
     
-    // Eliminar error listeners por defecto para manejar errores manualmente
     $parser->removeErrorListeners();
+    $arbol = $parser->programa();
     
-    // 2. Obtener árbol sintáctico
-    $tree = $parser->programa();
     
-    // 3. Análisis semántico (
-    $analyzer = new SemanticAnalyzer($symbolTable, $errorHandler);
-    $analyzer->analyze($tree);
+    // Se ejecuta el visitor
+    $salida = '';
+    if ($parser->getNumberOfSyntaxErrors() === 0) {
+        $visitor = new GolampiVisitorImpl($tablaSimbolos, $manejadorErrores);
+        $salida = $visitor->visit($arbol);
+    }
     
-    // 4. Ejecución 
-    $output = " Código procesado correctamente\n";
-    
-    $response = [
-        'success' => true,
-        'output' => $output,
-        'errors' => $errorHandler->getErrors(),
-        'symbols' => $symbolTable->getTable()
+
+
+    $respuesta = [
+        'exito' => true,
+        'salida' => $salida,
+        'errores' => $manejadorErrores->obtenerErrores(),
+        'tablaSimbolos' => $tablaSimbolos->obtenerTablaCompleta(),
+        'reportes' => [
+            'erroresCSV' => base64_encode($generadorReportes->generarCSVErrores($manejadorErrores->obtenerErrores())),
+            'simbolosCSV' => base64_encode($generadorReportes->generarCSVSimbolos($tablaSimbolos->obtenerTablaCompleta()))
+        ]
     ];
     
-} catch (Exception $e) {
-    $errorHandler->addError('Ejecución', $e->getMessage(), 0, 0);
-    $response = [
-        'success' => false,
-        'output' => '',
-        'errors' => $errorHandler->getErrors()
+} catch (Throwable $e) {
+    $respuesta = [
+        'exito' => false,
+        'error' => $e->getMessage(),
+        'salida' => '',
+        'errores' => [],
+        'tablaSimbolos' => []
     ];
 }
 
-echo json_encode($response);
+echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
+exit;
 ?>
-EOF

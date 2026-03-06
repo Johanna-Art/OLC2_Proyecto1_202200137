@@ -1,47 +1,32 @@
 grammar Golampi;
 
 // ========================================
-// REGLAS SINTÁCTICAS 
+// REGLAS SINTÁCTICAS - PARSER
 // ========================================
 
+// Programa principal
 programa
     : declaracion* EOF                                   # ReglaPrograma
     ;
 
+// Declaraciones a nivel de programa 
 declaracion
-    : declVar                                            # ReglaDeclVar
-    | declConst                                          # ReglaDeclConst
-    | declFunc                                           # ReglaDeclFunc
+    : VAR listaId tipo ('=' listaExpr)? PUNTOYCOMA       # ReglaDeclVar
+    | CONST ID tipo '=' expresion PUNTOYCOMA             # ReglaDeclConst
+    | FUNC ID '(' listaParam? ')' tipoRetorno? bloque    # ReglaDeclFunc
     ;
 
-// Declaración de variables
-declVar
-    : VAR listaId tipo ('=' listaExpr)? PUNTOYCOMA       # StmtDeclVar
-    ;
-
-// Declaración corta
-declVarCorta
-    : listaId ':=' listaExpr PUNTOYCOMA                  # StmtDeclVarCorta
-    ;
-
-// Declaración de constantes 
-declConst
-    : CONST ID tipo '=' expresion PUNTOYCOMA             # StmtDeclConst
-    ;
-
-// Declaración de funciones
-declFunc
-    : FUNC ID '(' listaParam? ')' tipoRetorno? bloque    # StmtDeclFunc
-    ;
-
+// Parámetros de función
 listaParam
     : param (COMA param)*                                # ReglaListaParam
     ;
 
 param
     : ID tipo                                            # ReglaParam
+    | ID MULT tipo                                       # ReglaParamPuntero
     ;
 
+// Tipo de retorno de función
 tipoRetorno
     : tipo                                               # TipoRetornoSimple
     | '(' listaTipos ')'                                 # TipoRetornoMultiple
@@ -59,39 +44,47 @@ tipo
     | RUNE                                               # ReglaTipoRune
     | STRING_TYPE                                        # ReglaTipoString
     | tipoArray                                          # ReglaTipoArray
-    | '*' tipo                                           # ReglaTipoPuntero
+    | MULT tipo                                          # ReglaTipoPuntero
     ;
 
 tipoArray
     : '[' expresion ']' tipo                             # ReglaTipoArrayExpr
     ;
 
-// Bloques de código
+// Bloque de código
 bloque
     : LLAVEIZQ sentencia* LLAVEDER                       # ReglaBloqueStmt
     ;
 
-// Sentencias 
+// ========================================
+// SENTENCIAS - INLINE 
+// ========================================
 sentencia
-    : declVar                                            # ReglaSentVar
-    | declVarCorta                                       # ReglaSentVarCorta
-    | declConst                                          # ReglaSentConst
-    | sentAsign                                          # ReglaSentAsign
-    | sentIncDec                                         # ReglaSentIncDec
-    | sentIf                                             # ReglaSentIf
-    | sentSwitch                                         # ReglaSentSwitch
-    | sentFor                                            # ReglaSentFor
-    | sentBreak                                          # ReglaSentBreak
-    | sentContinue                                       # ReglaSentContinue
-    | sentReturn                                         # ReglaSentReturn
-    | sentExpr                                           # ReglaSentExpr
-    | bloque                                             # ReglaSentBloque
+    : VAR listaId tipo ('=' listaExpr)? PUNTOYCOMA?        # ReglaSentVar
+    | listaId DOSPUNTOS ASIGN listaExpr PUNTOYCOMA?        # ReglaSentVarCorta
+    | CONST ID tipo '=' expresion PUNTOYCOMA?              # ReglaSentConst
+    | listaExpr opAsign listaExpr PUNTOYCOMA?              # ReglaSentAsign
+    | primario '[' expresion ']' opAsign expresion PUNTOYCOMA?  # ReglaSentAsignIndice
+    | expresion INC PUNTOYCOMA?                            # ReglaSentInc
+    | expresion DEC PUNTOYCOMA?                            # ReglaSentDec
+    | IF (sentSimple PUNTOYCOMA?)? expresion bloque (ELSE (sentencia | bloque))?  # ReglaSentIf
+    | SWITCH (sentSimple PUNTOYCOMA?)? expresion? LLAVEIZQ clausulaCaso* LLAVEDER  # ReglaSentSwitch
+    | FOR (clausulaFor | expresion)? bloque                # ReglaSentFor
+    | BREAK PUNTOYCOMA?                                    # ReglaSentBreak
+    | CONTINUE PUNTOYCOMA?                                 # ReglaSentContinue
+    | RETURN listaExpr? PUNTOYCOMA?                        # ReglaSentReturn
+    | listaExpr PUNTOYCOMA?                                # ReglaSentExpr
+    | bloque                                               # ReglaSentBloque
     ;
 
-sentAsign
-    : listaExpr opAsign listaExpr PUNTOYCOMA             # StmtSentAsign
+// Sentencias simples para if/for/switch
+sentSimple
+    : listaId DOSPUNTOS ASIGN listaExpr                  # ReglaSentSimpleVarCorta
+    | listaExpr opAsign listaExpr                        # ReglaSentSimpleAsign
+    | listaExpr                                          # ReglaSentSimpleExpr
     ;
 
+// Operadores de asignación
 opAsign
     : ASIGN                                              # ReglaOpAsign
     | ASIGN_SUMA                                         # ReglaOpAsignSuma
@@ -100,64 +93,27 @@ opAsign
     | ASIGN_DIV                                          # ReglaOpAsignDiv
     ;
 
-sentIncDec
-    : expresion INC PUNTOYCOMA                           # StmtSentInc
-    | expresion DEC PUNTOYCOMA                           # StmtSentDec
+// Clausulas de for
+clausulaFor
+    : (sentSimple)? PUNTOYCOMA expresion? PUNTOYCOMA expresion?  # ReglaClausulaFor
     ;
 
-// if
-sentIf
-    : IF (sentSimple PUNTOYCOMA)? expresion bloque (ELSE (sentIf | bloque))?  # StmtSentIfElse
-    ;
-
-sentSimple
-    : declVarCorta                                       # ReglaSentSimpleVarCorta
-    | sentAsign                                          # ReglaSentSimpleAsign
-    | sentExpr                                           # ReglaSentSimpleExpr
-    ;
-
-// switch
-sentSwitch
-    : SWITCH (sentSimple PUNTOYCOMA)? expresion? LLAVEIZQ clausulaCaso* LLAVEDER  # ReglaSentSwitchCtx
-    ;
-
+// Clausulas de switch
 clausulaCaso
     : CASE listaExpr DOSPUNTOS sentencia*                # ReglaClausulaCaso
     | DEFAULT DOSPUNTOS sentencia*                       # ReglaClausulaDefault
     ;
 
-// for
-sentFor
-    : FOR (clausulaFor | expresion)? bloque              # ReglaSentForCtx
-    ;
+// ========================================
+// EXPRESIONES
+// ========================================
 
-clausulaFor
-    : (sentSimple)? PUNTOYCOMA expresion? PUNTOYCOMA expresion?  # ReglaClausulaFor
-    ;
-
-// break
-sentBreak
-    : BREAK PUNTOYCOMA                                   # ReglaSentBreakCtx
-    ;
-
-// continue 
-sentContinue
-    : CONTINUE PUNTOYCOMA                                # ReglaSentContinueCtx
-    ;
-
-sentReturn
-    : RETURN listaExpr? PUNTOYCOMA                       # ReglaSentReturnCtx
-    ;
-
-sentExpr
-    : listaExpr PUNTOYCOMA                               # ReglaSentExprCtx
-    ;
-
-// Expresiones 
+// Lista de expresiones 
 listaExpr
     : expresion (COMA expresion)*                        # ReglaListaExpr
     ;
 
+// Expresiones con precedencia 
 expresion
     : expresion OR expresion                             # ReglaExprOrLogico
     | expresion AND expresion                            # ReglaExprAndLogico
@@ -175,34 +131,37 @@ expresion
     | NOT expresion                                      # ReglaExprNot
     | RESTA expresion                                    # ReglaExprMenosUnario
     | SUMA expresion                                     # ReglaExprMasUnario
-    | '&' expresion                                      # ReglaExprDireccion
-    | '*' expresion                                      # ReglaExprDesreferencia
+    | ADDR expresion                                     # ReglaExprDireccion
+    | MULT expresion                                     # ReglaExprDesreferencia
     | primario                                           # ReglaExprPrimario
     ;
 
+// =========
+// PRIMARIO 
+// =========
 primario
-    : literal                                            # ReglaPrimarioLiteral
-    | ID                                                 # ReglaPrimarioId
-    | NIL                                                # ReglaPrimarioNil
-    | '(' expresion ')'                                  # ReglaPrimarioParentesis
-    | llamadaBuiltIn                                     # ReglaPrimarioLlamadaBuiltIn
-    | primario CORCHIZQ expresion CORCHDER               # ReglaPrimarioIndice
-    | primario argumentos                                # ReglaPrimarioLlamada
-    | primario '.' ID                                    # ReglaPrimarioMiembro
+   
+    : FMT PUNTO PRINTLN argumentos                      # ReglaPrimarioPrintln
+    | LEN PARENIZQ expresion? PARENDER                  # ReglaPrimarioLen
+    | NOW PARENIZQ PARENDER                             # ReglaPrimarioNow
+    | SUBSTR PARENIZQ expresion COMA expresion COMA expresion PARENDER  # ReglaPrimarioSubstr
+    | TYPEOF PARENIZQ expresion PARENDER                # ReglaPrimarioTypeOf
+    
+    | literal                                           # ReglaPrimarioLiteral
+    | ID                                                # ReglaPrimarioId
+    | NIL                                               # ReglaPrimarioNil
+    | '(' expresion ')'                                 # ReglaPrimarioParentesis
+    | primario '[' expresion ']'                        # ReglaPrimarioIndice
+    | primario argumentos                               # ReglaPrimarioLlamada
+    | primario PUNTO ID                                 # ReglaPrimarioMiembro
     ;
 
-llamadaBuiltIn
-    : ID '.' 'Println' argumentos                        # ReglaLlamadaPrintln
-    | 'len' argumentos                                   # ReglaLlamadaLen
-    | 'now' argumentos                                   # ReglaLlamadaNow
-    | 'substr' argumentos                                # ReglaLlamadaSubstr
-    | 'typeOf' argumentos                                # ReglaLlamadaTypeOf
-    ;
-
+// Argumentos de función
 argumentos
     : PARENIZQ listaExpr? PARENDER                      # ReglaArgumentos
     ;
 
+// Literales
 literal
     : ENTERO_LITERAL                                     # ReglaLiteralEntero
     | FLOTANTE_LITERAL                                   # ReglaLiteralFlotante
@@ -212,15 +171,16 @@ literal
     | FALSE                                              # ReglaLiteralFalso
     ;
 
+// Lista de identificadores
 listaId
     : ID (COMA ID)*                                      # ReglaListaId
     ;
 
 // ========================================
-// REGLAS LÉXICAS 
+// REGLAS LÉXICAS - LEXER
 // ========================================
 
-// Palabras reservadas 
+// Palabras reservadas
 VAR: 'var';
 CONST: 'const';
 FUNC: 'func';
@@ -235,23 +195,30 @@ CONTINUE: 'continue';
 RETURN: 'return';
 NIL: 'nil';
 
-// Tipos de datos 
+// Tipos de datos
 INT32: 'int32';
 FLOAT32: 'float32';
 BOOL: 'bool';
 RUNE: 'rune';
 STRING_TYPE: 'string';
 
-// Booleanos literales en INGLÉS
+// Booleanos literales
 TRUE: 'true';
 FALSE: 'false';
 
-// Identificadores
+FMT: 'fmt';
+PRINTLN: 'Println';
+LEN: 'len';
+NOW: 'now';
+SUBSTR: 'substr';
+TYPEOF: 'typeOf';
+
+// Identificadores 
 ID: [a-zA-Z_][a-zA-Z0-9_]*;
 
 // Literales numéricos
 ENTERO_LITERAL: [0-9]+;
-FLOTANTE_LITERAL: [0-9]+'.'[0-9]+;
+FLOTANTE_LITERAL: [0-9]+ '.' [0-9]+;
 
 // Cadenas y runas
 CADENA_LITERAL: '"' (~["\\] | '\\' .)* '"';
@@ -283,7 +250,7 @@ ADDR: '&';
 INC: '++';
 DEC: '--';
 
-// Delimitadores 
+// Delimitadores
 PARENIZQ: '(';
 PARENDER: ')';
 CORCHIZQ: '[';
@@ -295,9 +262,9 @@ DOSPUNTOS: ':';
 PUNTOYCOMA: ';';
 PUNTO: '.';
 
-// Comentarios 
+// Comentarios
 COMENTARIO_LINEA: '//' ~[\r\n]* -> skip;
 COMENTARIO_BLOQUE: '/*' .*? '*/' -> skip;
 
-// Espacios en blanco 
+// Espacios en blanco
 ESPACIO: [ \t\r\n]+ -> skip;

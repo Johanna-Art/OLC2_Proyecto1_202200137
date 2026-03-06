@@ -1,28 +1,41 @@
+window.reportesActuales = null;
+
 function ejecutar() {
     const code = document.getElementById('editor').value;
     const output = document.getElementById('output');
     
-    output.textContent = 'Procesando...';
+    output.textContent = ' Ejecutando...';
+    const url = window.location.origin + '/backend/index.php';
     
-    fetch('../backend/index.php', {
+    fetch(url, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({code: code, action: 'execute'})
+        body: JSON.stringify({codigo: code, accion: 'ejecutar'})
     })
-    .then(res => res.json())
-    .then(data => {
-        if(data.success) {
-            output.textContent = data.output || ' Sin salida';
-            if(data.errors && data.errors.length > 0) {
-                output.textContent += '\n\n Advertencias:\n' + 
-                    data.errors.map(e => 'Línea ' + e.line + ': ' + e.description).join('\n');
+    .then(res => res.text())  //Leer como texto PRIMERO
+    .then(text => {
+        console.log('Respuesta backend:', text);
+        try {
+            const data = JSON.parse(text);
+            
+            if (data.exito) {
+                output.textContent = data.salida || ' Sin salida';
+                if (data.errores?.length) {
+                    output.textContent += '\n' + data.errores.map(e => e.descripcion).join('; ');
+                }
+                window.reportesActuales = data.reportes;
+            } else {
+                output.textContent = ' ' + (data.error || 'Error');
             }
-        } else {
-            output.textContent = 'Error: ' + (data.error || 'Error desconocido');
+        } catch (e) {
+            
+            output.textContent = 'espuesta inválida:\n' + text.substring(0, 200);
+            console.error('No es JSON:', text);
         }
     })
     .catch(err => {
-        output.textContent = 'Error de conexión: ' + err.message;
+        output.textContent = 'Error: ' + err.message;
+        console.error('Fetch error:', err);
     });
 }
 
@@ -48,21 +61,29 @@ function cargar() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.golampi,.txt';
-    input.onchange = function(e) {
+    input.onchange = e => {
         const file = e.target.files[0];
         const reader = new FileReader();
-        reader.onload = function(ev) {
-            document.getElementById('editor').value = ev.target.result;
-        };
+        reader.onload = ev => document.getElementById('editor').value = ev.target.result;
         reader.readAsText(file);
     };
     input.click();
 }
 
 function descargarErrores() {
-    alert('Generando reporte de errores...');
+    if (!window.reportesActuales?.erroresCSV) { alert('Ejecuta primero'); return; }
+    const blob = new Blob([atob(window.reportesActuales.erroresCSV)], {type: 'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'errores.csv';
+    a.click();
 }
 
 function descargarSimbolos() {
-    alert('Generando tabla de símbolos...');
+    if (!window.reportesActuales?.simbolosCSV) { alert('Ejecuta primero'); return; }
+    const blob = new Blob([atob(window.reportesActuales.simbolosCSV)], {type: 'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'simbolos.csv';
+    a.click();
 }

@@ -60,54 +60,6 @@ interface GolampiListener extends ParseTreeListener {
 	 */
 	public function exitReglaDeclFunc(Context\ReglaDeclFuncContext $context): void;
 	/**
-	 * Enter a parse tree produced by the `StmtDeclVar`
-	 * labeled alternative in {@see GolampiParser::declVar()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterStmtDeclVar(Context\StmtDeclVarContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `StmtDeclVar` labeled alternative
-	 * in {@see GolampiParser::declVar()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitStmtDeclVar(Context\StmtDeclVarContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `StmtDeclVarCorta`
-	 * labeled alternative in {@see GolampiParser::declVarCorta()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterStmtDeclVarCorta(Context\StmtDeclVarCortaContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `StmtDeclVarCorta` labeled alternative
-	 * in {@see GolampiParser::declVarCorta()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitStmtDeclVarCorta(Context\StmtDeclVarCortaContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `StmtDeclConst`
-	 * labeled alternative in {@see GolampiParser::declConst()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterStmtDeclConst(Context\StmtDeclConstContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `StmtDeclConst` labeled alternative
-	 * in {@see GolampiParser::declConst()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitStmtDeclConst(Context\StmtDeclConstContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `StmtDeclFunc`
-	 * labeled alternative in {@see GolampiParser::declFunc()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterStmtDeclFunc(Context\StmtDeclFuncContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `StmtDeclFunc` labeled alternative
-	 * in {@see GolampiParser::declFunc()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitStmtDeclFunc(Context\StmtDeclFuncContext $context): void;
-	/**
 	 * Enter a parse tree produced by the `ReglaListaParam`
 	 * labeled alternative in {@see GolampiParser::listaParam()}.
 	 * @param $context The parse tree.
@@ -131,6 +83,18 @@ interface GolampiListener extends ParseTreeListener {
 	 * @param $context The parse tree.
 	 */
 	public function exitReglaParam(Context\ReglaParamContext $context): void;
+	/**
+	 * Enter a parse tree produced by the `ReglaParamPuntero`
+	 * labeled alternative in {@see GolampiParser::param()}.
+	 * @param $context The parse tree.
+	 */
+	public function enterReglaParamPuntero(Context\ReglaParamPunteroContext $context): void;
+	/**
+	 * Exit a parse tree produced by the `ReglaParamPuntero` labeled alternative
+	 * in {@see GolampiParser::param()}.
+	 * @param $context The parse tree.
+	 */
+	public function exitReglaParamPuntero(Context\ReglaParamPunteroContext $context): void;
 	/**
 	 * Enter a parse tree produced by the `TipoRetornoSimple`
 	 * labeled alternative in {@see GolampiParser::tipoRetorno()}.
@@ -324,17 +288,41 @@ interface GolampiListener extends ParseTreeListener {
 	 */
 	public function exitReglaSentAsign(Context\ReglaSentAsignContext $context): void;
 	/**
-	 * Enter a parse tree produced by the `ReglaSentIncDec`
+	 * Enter a parse tree produced by the `ReglaSentAsignIndice`
 	 * labeled alternative in {@see GolampiParser::sentencia()}.
 	 * @param $context The parse tree.
 	 */
-	public function enterReglaSentIncDec(Context\ReglaSentIncDecContext $context): void;
+	public function enterReglaSentAsignIndice(Context\ReglaSentAsignIndiceContext $context): void;
 	/**
-	 * Exit a parse tree produced by the `ReglaSentIncDec` labeled alternative
+	 * Exit a parse tree produced by the `ReglaSentAsignIndice` labeled alternative
 	 * in {@see GolampiParser::sentencia()}.
 	 * @param $context The parse tree.
 	 */
-	public function exitReglaSentIncDec(Context\ReglaSentIncDecContext $context): void;
+	public function exitReglaSentAsignIndice(Context\ReglaSentAsignIndiceContext $context): void;
+	/**
+	 * Enter a parse tree produced by the `ReglaSentInc`
+	 * labeled alternative in {@see GolampiParser::sentencia()}.
+	 * @param $context The parse tree.
+	 */
+	public function enterReglaSentInc(Context\ReglaSentIncContext $context): void;
+	/**
+	 * Exit a parse tree produced by the `ReglaSentInc` labeled alternative
+	 * in {@see GolampiParser::sentencia()}.
+	 * @param $context The parse tree.
+	 */
+	public function exitReglaSentInc(Context\ReglaSentIncContext $context): void;
+	/**
+	 * Enter a parse tree produced by the `ReglaSentDec`
+	 * labeled alternative in {@see GolampiParser::sentencia()}.
+	 * @param $context The parse tree.
+	 */
+	public function enterReglaSentDec(Context\ReglaSentDecContext $context): void;
+	/**
+	 * Exit a parse tree produced by the `ReglaSentDec` labeled alternative
+	 * in {@see GolampiParser::sentencia()}.
+	 * @param $context The parse tree.
+	 */
+	public function exitReglaSentDec(Context\ReglaSentDecContext $context): void;
 	/**
 	 * Enter a parse tree produced by the `ReglaSentIf`
 	 * labeled alternative in {@see GolampiParser::sentencia()}.
@@ -432,17 +420,41 @@ interface GolampiListener extends ParseTreeListener {
 	 */
 	public function exitReglaSentBloque(Context\ReglaSentBloqueContext $context): void;
 	/**
-	 * Enter a parse tree produced by the `StmtSentAsign`
-	 * labeled alternative in {@see GolampiParser::sentAsign()}.
+	 * Enter a parse tree produced by the `ReglaSentSimpleVarCorta`
+	 * labeled alternative in {@see GolampiParser::sentSimple()}.
 	 * @param $context The parse tree.
 	 */
-	public function enterStmtSentAsign(Context\StmtSentAsignContext $context): void;
+	public function enterReglaSentSimpleVarCorta(Context\ReglaSentSimpleVarCortaContext $context): void;
 	/**
-	 * Exit a parse tree produced by the `StmtSentAsign` labeled alternative
-	 * in {@see GolampiParser::sentAsign()}.
+	 * Exit a parse tree produced by the `ReglaSentSimpleVarCorta` labeled alternative
+	 * in {@see GolampiParser::sentSimple()}.
 	 * @param $context The parse tree.
 	 */
-	public function exitStmtSentAsign(Context\StmtSentAsignContext $context): void;
+	public function exitReglaSentSimpleVarCorta(Context\ReglaSentSimpleVarCortaContext $context): void;
+	/**
+	 * Enter a parse tree produced by the `ReglaSentSimpleAsign`
+	 * labeled alternative in {@see GolampiParser::sentSimple()}.
+	 * @param $context The parse tree.
+	 */
+	public function enterReglaSentSimpleAsign(Context\ReglaSentSimpleAsignContext $context): void;
+	/**
+	 * Exit a parse tree produced by the `ReglaSentSimpleAsign` labeled alternative
+	 * in {@see GolampiParser::sentSimple()}.
+	 * @param $context The parse tree.
+	 */
+	public function exitReglaSentSimpleAsign(Context\ReglaSentSimpleAsignContext $context): void;
+	/**
+	 * Enter a parse tree produced by the `ReglaSentSimpleExpr`
+	 * labeled alternative in {@see GolampiParser::sentSimple()}.
+	 * @param $context The parse tree.
+	 */
+	public function enterReglaSentSimpleExpr(Context\ReglaSentSimpleExprContext $context): void;
+	/**
+	 * Exit a parse tree produced by the `ReglaSentSimpleExpr` labeled alternative
+	 * in {@see GolampiParser::sentSimple()}.
+	 * @param $context The parse tree.
+	 */
+	public function exitReglaSentSimpleExpr(Context\ReglaSentSimpleExprContext $context): void;
 	/**
 	 * Enter a parse tree produced by the `ReglaOpAsign`
 	 * labeled alternative in {@see GolampiParser::opAsign()}.
@@ -504,89 +516,17 @@ interface GolampiListener extends ParseTreeListener {
 	 */
 	public function exitReglaOpAsignDiv(Context\ReglaOpAsignDivContext $context): void;
 	/**
-	 * Enter a parse tree produced by the `StmtSentInc`
-	 * labeled alternative in {@see GolampiParser::sentIncDec()}.
+	 * Enter a parse tree produced by the `ReglaClausulaFor`
+	 * labeled alternative in {@see GolampiParser::clausulaFor()}.
 	 * @param $context The parse tree.
 	 */
-	public function enterStmtSentInc(Context\StmtSentIncContext $context): void;
+	public function enterReglaClausulaFor(Context\ReglaClausulaForContext $context): void;
 	/**
-	 * Exit a parse tree produced by the `StmtSentInc` labeled alternative
-	 * in {@see GolampiParser::sentIncDec()}.
+	 * Exit a parse tree produced by the `ReglaClausulaFor` labeled alternative
+	 * in {@see GolampiParser::clausulaFor()}.
 	 * @param $context The parse tree.
 	 */
-	public function exitStmtSentInc(Context\StmtSentIncContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `StmtSentDec`
-	 * labeled alternative in {@see GolampiParser::sentIncDec()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterStmtSentDec(Context\StmtSentDecContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `StmtSentDec` labeled alternative
-	 * in {@see GolampiParser::sentIncDec()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitStmtSentDec(Context\StmtSentDecContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `StmtSentIfElse`
-	 * labeled alternative in {@see GolampiParser::sentIf()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterStmtSentIfElse(Context\StmtSentIfElseContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `StmtSentIfElse` labeled alternative
-	 * in {@see GolampiParser::sentIf()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitStmtSentIfElse(Context\StmtSentIfElseContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaSentSimpleVarCorta`
-	 * labeled alternative in {@see GolampiParser::sentSimple()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaSentSimpleVarCorta(Context\ReglaSentSimpleVarCortaContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaSentSimpleVarCorta` labeled alternative
-	 * in {@see GolampiParser::sentSimple()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaSentSimpleVarCorta(Context\ReglaSentSimpleVarCortaContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaSentSimpleAsign`
-	 * labeled alternative in {@see GolampiParser::sentSimple()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaSentSimpleAsign(Context\ReglaSentSimpleAsignContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaSentSimpleAsign` labeled alternative
-	 * in {@see GolampiParser::sentSimple()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaSentSimpleAsign(Context\ReglaSentSimpleAsignContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaSentSimpleExpr`
-	 * labeled alternative in {@see GolampiParser::sentSimple()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaSentSimpleExpr(Context\ReglaSentSimpleExprContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaSentSimpleExpr` labeled alternative
-	 * in {@see GolampiParser::sentSimple()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaSentSimpleExpr(Context\ReglaSentSimpleExprContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaSentSwitchCtx`
-	 * labeled alternative in {@see GolampiParser::sentSwitch()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaSentSwitchCtx(Context\ReglaSentSwitchCtxContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaSentSwitchCtx` labeled alternative
-	 * in {@see GolampiParser::sentSwitch()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaSentSwitchCtx(Context\ReglaSentSwitchCtxContext $context): void;
+	public function exitReglaClausulaFor(Context\ReglaClausulaForContext $context): void;
 	/**
 	 * Enter a parse tree produced by the `ReglaClausulaCaso`
 	 * labeled alternative in {@see GolampiParser::clausulaCaso()}.
@@ -611,78 +551,6 @@ interface GolampiListener extends ParseTreeListener {
 	 * @param $context The parse tree.
 	 */
 	public function exitReglaClausulaDefault(Context\ReglaClausulaDefaultContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaSentForCtx`
-	 * labeled alternative in {@see GolampiParser::sentFor()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaSentForCtx(Context\ReglaSentForCtxContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaSentForCtx` labeled alternative
-	 * in {@see GolampiParser::sentFor()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaSentForCtx(Context\ReglaSentForCtxContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaClausulaFor`
-	 * labeled alternative in {@see GolampiParser::clausulaFor()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaClausulaFor(Context\ReglaClausulaForContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaClausulaFor` labeled alternative
-	 * in {@see GolampiParser::clausulaFor()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaClausulaFor(Context\ReglaClausulaForContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaSentBreakCtx`
-	 * labeled alternative in {@see GolampiParser::sentBreak()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaSentBreakCtx(Context\ReglaSentBreakCtxContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaSentBreakCtx` labeled alternative
-	 * in {@see GolampiParser::sentBreak()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaSentBreakCtx(Context\ReglaSentBreakCtxContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaSentContinueCtx`
-	 * labeled alternative in {@see GolampiParser::sentContinue()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaSentContinueCtx(Context\ReglaSentContinueCtxContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaSentContinueCtx` labeled alternative
-	 * in {@see GolampiParser::sentContinue()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaSentContinueCtx(Context\ReglaSentContinueCtxContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaSentReturnCtx`
-	 * labeled alternative in {@see GolampiParser::sentReturn()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaSentReturnCtx(Context\ReglaSentReturnCtxContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaSentReturnCtx` labeled alternative
-	 * in {@see GolampiParser::sentReturn()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaSentReturnCtx(Context\ReglaSentReturnCtxContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaSentExprCtx`
-	 * labeled alternative in {@see GolampiParser::sentExpr()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaSentExprCtx(Context\ReglaSentExprCtxContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaSentExprCtx` labeled alternative
-	 * in {@see GolampiParser::sentExpr()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaSentExprCtx(Context\ReglaSentExprCtxContext $context): void;
 	/**
 	 * Enter a parse tree produced by the `ReglaListaExpr`
 	 * labeled alternative in {@see GolampiParser::listaExpr()}.
@@ -960,6 +828,30 @@ interface GolampiListener extends ParseTreeListener {
 	 */
 	public function exitReglaPrimarioIndice(Context\ReglaPrimarioIndiceContext $context): void;
 	/**
+	 * Enter a parse tree produced by the `ReglaPrimarioPrintln`
+	 * labeled alternative in {@see GolampiParser::primario()}.
+	 * @param $context The parse tree.
+	 */
+	public function enterReglaPrimarioPrintln(Context\ReglaPrimarioPrintlnContext $context): void;
+	/**
+	 * Exit a parse tree produced by the `ReglaPrimarioPrintln` labeled alternative
+	 * in {@see GolampiParser::primario()}.
+	 * @param $context The parse tree.
+	 */
+	public function exitReglaPrimarioPrintln(Context\ReglaPrimarioPrintlnContext $context): void;
+	/**
+	 * Enter a parse tree produced by the `ReglaPrimarioLen`
+	 * labeled alternative in {@see GolampiParser::primario()}.
+	 * @param $context The parse tree.
+	 */
+	public function enterReglaPrimarioLen(Context\ReglaPrimarioLenContext $context): void;
+	/**
+	 * Exit a parse tree produced by the `ReglaPrimarioLen` labeled alternative
+	 * in {@see GolampiParser::primario()}.
+	 * @param $context The parse tree.
+	 */
+	public function exitReglaPrimarioLen(Context\ReglaPrimarioLenContext $context): void;
+	/**
 	 * Enter a parse tree produced by the `ReglaPrimarioId`
 	 * labeled alternative in {@see GolampiParser::primario()}.
 	 * @param $context The parse tree.
@@ -1008,77 +900,41 @@ interface GolampiListener extends ParseTreeListener {
 	 */
 	public function exitReglaPrimarioLlamada(Context\ReglaPrimarioLlamadaContext $context): void;
 	/**
-	 * Enter a parse tree produced by the `ReglaPrimarioLlamadaBuiltIn`
+	 * Enter a parse tree produced by the `ReglaPrimarioNow`
 	 * labeled alternative in {@see GolampiParser::primario()}.
 	 * @param $context The parse tree.
 	 */
-	public function enterReglaPrimarioLlamadaBuiltIn(Context\ReglaPrimarioLlamadaBuiltInContext $context): void;
+	public function enterReglaPrimarioNow(Context\ReglaPrimarioNowContext $context): void;
 	/**
-	 * Exit a parse tree produced by the `ReglaPrimarioLlamadaBuiltIn` labeled alternative
+	 * Exit a parse tree produced by the `ReglaPrimarioNow` labeled alternative
 	 * in {@see GolampiParser::primario()}.
 	 * @param $context The parse tree.
 	 */
-	public function exitReglaPrimarioLlamadaBuiltIn(Context\ReglaPrimarioLlamadaBuiltInContext $context): void;
+	public function exitReglaPrimarioNow(Context\ReglaPrimarioNowContext $context): void;
 	/**
-	 * Enter a parse tree produced by the `ReglaLlamadaPrintln`
-	 * labeled alternative in {@see GolampiParser::llamadaBuiltIn()}.
+	 * Enter a parse tree produced by the `ReglaPrimarioTypeOf`
+	 * labeled alternative in {@see GolampiParser::primario()}.
 	 * @param $context The parse tree.
 	 */
-	public function enterReglaLlamadaPrintln(Context\ReglaLlamadaPrintlnContext $context): void;
+	public function enterReglaPrimarioTypeOf(Context\ReglaPrimarioTypeOfContext $context): void;
 	/**
-	 * Exit a parse tree produced by the `ReglaLlamadaPrintln` labeled alternative
-	 * in {@see GolampiParser::llamadaBuiltIn()}.
+	 * Exit a parse tree produced by the `ReglaPrimarioTypeOf` labeled alternative
+	 * in {@see GolampiParser::primario()}.
 	 * @param $context The parse tree.
 	 */
-	public function exitReglaLlamadaPrintln(Context\ReglaLlamadaPrintlnContext $context): void;
+	public function exitReglaPrimarioTypeOf(Context\ReglaPrimarioTypeOfContext $context): void;
 	/**
-	 * Enter a parse tree produced by the `ReglaLlamadaLen`
-	 * labeled alternative in {@see GolampiParser::llamadaBuiltIn()}.
+	 * Enter a parse tree produced by the `ReglaPrimarioSubstr`
+	 * labeled alternative in {@see GolampiParser::primario()}.
 	 * @param $context The parse tree.
 	 */
-	public function enterReglaLlamadaLen(Context\ReglaLlamadaLenContext $context): void;
+	public function enterReglaPrimarioSubstr(Context\ReglaPrimarioSubstrContext $context): void;
 	/**
-	 * Exit a parse tree produced by the `ReglaLlamadaLen` labeled alternative
-	 * in {@see GolampiParser::llamadaBuiltIn()}.
+	 * Exit a parse tree produced by the `ReglaPrimarioSubstr` labeled alternative
+	 * in {@see GolampiParser::primario()}.
 	 * @param $context The parse tree.
 	 */
-	public function exitReglaLlamadaLen(Context\ReglaLlamadaLenContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaLlamadaNow`
-	 * labeled alternative in {@see GolampiParser::llamadaBuiltIn()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaLlamadaNow(Context\ReglaLlamadaNowContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaLlamadaNow` labeled alternative
-	 * in {@see GolampiParser::llamadaBuiltIn()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaLlamadaNow(Context\ReglaLlamadaNowContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaLlamadaSubstr`
-	 * labeled alternative in {@see GolampiParser::llamadaBuiltIn()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaLlamadaSubstr(Context\ReglaLlamadaSubstrContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaLlamadaSubstr` labeled alternative
-	 * in {@see GolampiParser::llamadaBuiltIn()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaLlamadaSubstr(Context\ReglaLlamadaSubstrContext $context): void;
-	/**
-	 * Enter a parse tree produced by the `ReglaLlamadaTypeOf`
-	 * labeled alternative in {@see GolampiParser::llamadaBuiltIn()}.
-	 * @param $context The parse tree.
-	 */
-	public function enterReglaLlamadaTypeOf(Context\ReglaLlamadaTypeOfContext $context): void;
-	/**
-	 * Exit a parse tree produced by the `ReglaLlamadaTypeOf` labeled alternative
-	 * in {@see GolampiParser::llamadaBuiltIn()}.
-	 * @param $context The parse tree.
-	 */
-	public function exitReglaLlamadaTypeOf(Context\ReglaLlamadaTypeOfContext $context): void;
+	public function exitReglaPrimarioSubstr(Context\ReglaPrimarioSubstrContext $context): void;
 	/**
 	 * Enter a parse tree produced by the `ReglaArgumentos`
 	 * labeled alternative in {@see GolampiParser::argumentos()}.
