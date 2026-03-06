@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>b🔷 Golampi IDE</h1>
+    <h1> 💎 Golampi IDE</h1>
     
     <div class="toolbar">
         <button onclick="nuevo()">Nuevo</button>
@@ -18,18 +18,33 @@
     </div>
     
     <div class="editor-container">
-        <textarea id="editor" placeholder="Escribe código Golampi aquí..."></textarea>
+        <div class="line-numbers" id="editorLineNumbers"></div>
+        <textarea id="editor" spellcheck="false" placeholder="Escribe tu código Golampi aquí"></textarea>
     </div>
     
-    <div class="console">
-        <h3>Consola:</h3>
-        <pre id="output"></pre>
+    <div class="console-container">
+        <div class="line-numbers" id="consoleLineNumbers"></div>
+        <pre id="output" class="console-output"></pre>
     </div>
     
-    <div class="reports">
+    <div class="reportes">
         <h3>Reportes:</h3>
-        <button onclick="descargarErrores()">Errores</button>
-        <button onclick="descargarSimbolos()"> Tabla de Símbolos</button>
+        <div class="report-buttons">
+            <button onclick="descargarResultado()" id="btnResultado" disabled> Descargar Resultado</button>
+            <button onclick="descargarErrores()" id="btnErrores" disabled> Descargar Errores</button>
+            <button onclick="descargarTablaSimbolos()" id="btnSimbolos" disabled> Descargar Tabla de Símbolos</button>
+            <button onclick="descargarAST()" id="btnAST" disabled> Descargar AST</button>
+        </div>
+        
+        <div class="report-section" id="tablaSimbolosSection" style="display:none;">
+            <h4>Tabla de Símbolos</h4>
+            <div id="tablaSimbolos" class="report-table"></div>
+        </div>
+        
+        <div class="report-section" id="astSection" style="display:none;">
+            <h4>Abstract Syntax Tree (AST)</h4>
+            <pre id="astView" class="ast-output"></pre>
+        </div>
     </div>
     
     <script src="js/editor.js"></script>
